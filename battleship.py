@@ -140,7 +140,7 @@ class Board:
             res +=f"\n{i+1} | " + " | ".join(row) + " |"
         
         if self.hid:
-            res = res.replace("■", 'O')
+            res = res.replace("■", '☐')
 
         return res
 
@@ -182,7 +182,7 @@ class Game:
         self.size = size
         pl = self.random_board()
         comp = self.random_board()
-
+        comp.hid = True
         self.ai = AI(comp,pl)
         self.user = User(pl, comp)
         # self.player = Player(p,c)
@@ -214,6 +214,21 @@ class Game:
         board.begin()
         return board
 
+    def loop(self):
+        num = 0
+       
+        while True:
+            print("-"*20+"\nYour Board: ")
+            print(self.user.board)
+            print("-"*20+"\nComputer Board: ")
+            print(self.ai.board)
+            if num %2 == 0:
+                 print("-"*20+"\nYour Move Now: ")
+                 self.user.move()
+            elif num%2 ==1:
+                print("-"*20+"\nComputer Move Now: ")
+                self.ai.move()
+            num += 1
 
 class Player:
     def __init__(self,  board, enemyBoard):
@@ -261,5 +276,4 @@ class User(Player):
             return Dot(x-1, y-1)
 
 g = Game()
-g.user.move()
-print(g.user.enemyBoard)
+g.loop()
