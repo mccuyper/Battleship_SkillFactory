@@ -162,7 +162,7 @@ def random_place(size=6):
                 break
             except BoardWrongShipException:
                 pass
-    # board.begin()
+    
     return board
 
 
@@ -170,15 +170,6 @@ def random_place(size=6):
 class Game:
 
     def __init__(self, size=6):
-        # p = None
-        # while p is None:
-        #     p = self.random_place()
-
-        # c = None
-        # while c is None:
-        #     c = self.random_place()
-
-
         self.size = size
         pl = self.random_board()
         comp = self.random_board()
