@@ -214,6 +214,17 @@ class Game:
         board.begin()
         return board
 
+
+    def greet(self):
+        print("-------------------")
+        print("|    Welcome to   |")
+        print("|    ----------   |")
+        print("| BATTLESHIP GAME | ")
+        print("-------------------")
+        print(" Main rules:       ")
+        print(" x - input for column  ")
+        print(" y - input for row ")
+
     def loop(self):
         num = 0
        
@@ -223,7 +234,7 @@ class Game:
             print("-"*20+"\nComputer Board: ")
             print(self.ai.board)
             if num %2 == 0:
-                print("-"*20+"\nYour Move Now: ")
+                print("-"*20+"\nYour Move Now (x y): ")
                 repeat = self.user.move()
                  
             else:
@@ -234,12 +245,17 @@ class Game:
                 num-=1
             if self.ai.board.count == 7:
                 print("-"*20+"\nYou Win! ")
-                
+                break
             elif self.user.board.count == 7:
                 print("-"*20+"\nYou Lost! ")
-                
+                break
 
             num += 1
+
+    def start(self):
+        self.greet()
+        self.loop()
+
 
 class Player:
     def __init__(self,  board, enemyBoard):
@@ -286,4 +302,4 @@ class User(Player):
             return Dot(x-1, y-1)
 
 g = Game()
-g.loop()
+g.start()
