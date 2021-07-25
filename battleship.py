@@ -111,33 +111,26 @@ class Board:
         return res
 
 
-
+# Place Ships on  the Board
 def random_place(size=6):
     lens = [3, 2, 2, 1, 1, 1, 1]
     board = Board()
     attempts = 0
     for l in lens:
-        # while True:
-        #     attempts += 1
-        #     if attempts > 2000:
-        #         return None
-        ship = Ship(Dot(randint(0, size), randint(0, size)), l, randint(0,1))
-        try:
-            board.add_ship(ship)
-            break
-        except BoardWrongShipException:
-            pass
+        while True:
+            attempts += 1
+            if attempts > 2000:
+                return None
+            ship = Ship(Dot(randint(0, size), randint(0, size)), l, randint(0,1))
+            try:
+                board.add_ship(ship)
+                break
+            except BoardWrongShipException:
+                pass
     # board.begin()
     return board
 
 
-
-# b = Board(hid = 0)
-# s = Ship(Dot(0,5), 3, 1)
-
-# b.add_ship(s)
-# b.field()
-# print(b)
 
 b = random_place()
 print(b)
