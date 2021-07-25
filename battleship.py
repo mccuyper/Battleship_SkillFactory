@@ -176,9 +176,7 @@ class Game:
         comp.hid = True
         self.ai = AI(comp,pl)
         self.user = User(pl, comp)
-        # self.player = Player(p,c)
-        # self.comp = Computer(p,c)
-
+        
     def random_board(self):
         board = None
         while board is None:
