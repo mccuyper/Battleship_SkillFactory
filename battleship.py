@@ -19,11 +19,11 @@ class BoardException(Exception):
 
 class BoardOutException(BoardException):
     def __str__(self):
-        return "Вы пытаетесь выстрелить за доску!"
+        return "Your are trying to shoot out of the board!"
 
 class BoardUsedException(BoardException):
     def __str__(self):
-        return "Вы уже стреляли в эту клетку"
+        return "You've already shooted here!!!"
 
 class BoardWrongShipException(BoardException):
     pass
@@ -90,7 +90,7 @@ class Board:
                 if ship.lives == 0:
                     self.count += 1
                     self.ship_shape(ship, verb = True)
-                    print("Ship's been destroyed!")
+                    print("Ship's been sinked!")
                     return True  # continue shooting
                 else:
                     print('Ship\'s shooted! ')
@@ -223,11 +223,22 @@ class Game:
             print("-"*20+"\nComputer Board: ")
             print(self.ai.board)
             if num %2 == 0:
-                 print("-"*20+"\nYour Move Now: ")
-                 self.user.move()
-            elif num%2 ==1:
+                print("-"*20+"\nYour Move Now: ")
+                repeat = self.user.move()
+                 
+            else:
                 print("-"*20+"\nComputer Move Now: ")
-                self.ai.move()
+                repeat = self.ai.move()
+
+            if repeat:
+                num-=1
+            if self.ai.board.count == 7:
+                print("-"*20+"\nYou Win! ")
+                
+            elif self.user.board.count == 7:
+                print("-"*20+"\nYou Lost! ")
+                
+
             num += 1
 
 class Player:
@@ -244,31 +255,30 @@ class Player:
             try:
                 target = self.ask()
                 repeat = self.enemyBoard.shot(target)
-                if not(repeat):
-                    break
+                return repeat
             except BoardException as e:
                 print(e)
 
 class AI(Player):
     def ask(self):
         d = Dot(randint(0,5),randint(0,5))
-        print(f"Computer is shooting! {d.x}  {d.y}")
+        print(f"Computer is shooting! {d.x+1}  {d.y+1}")
         return d
 
 
 class User(Player):
     def ask(self):
         while True:
-            cords = input("Ваш ход: ").split()
+            cords = input("Your turn: ").split()
             
             if len(cords) != 2:
-                print(" Введите 2 координаты! ")
+                print("---> Put coordinates(column row) where to shoot(e.g.: 3 2)! ")
                 continue
             
             x, y = cords
             
             if not(x.isdigit()) or not(y.isdigit()):
-                print(" Введите числа! ")
+                print(" Put digits only please! ")
                 continue
             
             x, y = int(x), int(y)
